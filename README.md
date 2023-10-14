@@ -1,2 +1,2 @@
 # security-utils-example
-owasp security utils for reuse
+Common security utility class to cover OWASP issues.
