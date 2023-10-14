@@ -1,0 +1,47 @@
+using System;
+using System.Text.RegularExpressions;
+
+public class XSSEncoder
+{
+    public static string SanitizeInput(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+        // Remove potentially dangerous HTML and JavaScript content
+        string sanitizedInput = StripTags(input);
+
+        // You can add more custom filtering or validation here if needed.
+
+        return sanitizedInput;
+    }
+
+    public static string StripTags(string input)
+    {
+        // Use regular expressions to remove HTML and JavaScript tags
+        return Regex.Replace(input, "<.*?>", string.Empty);
+    }
+
+    public static string HtmlEncode(string input)
+    {
+        // Encode characters to their HTML entities to prevent XSS
+        return System.Web.HttpUtility.HtmlEncode(input);
+    }
+
+    public static string HtmlDecode(string input)
+    {
+        // Decode HTML entities to display the content correctly
+        return System.Web.HttpUtility.HtmlDecode(input);
+    }
+
+    public static void Main(string[] args)
+    {
+        string userInput = "<script>alert('XSS Attack!');</script>";
+        string sanitizedInput = SanitizeInput(userInput);
+        string encodedInput = HtmlEncode(sanitizedInput);
+
+        Console.WriteLine("Sanitized and encoded input: " + encodedInput);
+    }
+}
